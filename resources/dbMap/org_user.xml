@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.OrgUserDao">
+	<insert id="addOne" parameterType="OrganizationUser" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_org_user(uid,oid,createTime) 
+		values (#{uid},#{oid},#{createTime});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_org_user	where id=#{id}
+	</delete>
+	
+	<delete id="deleteByOidUid" parameterType="map">
+		delete from tbl_org_user where oid=#{0} and uid=#{1}
+	</delete>
+	
+	<delete id="deleteByUid" parameterType="int">
+		delete from tbl_org_user where uid=#{uid}
+	</delete>
+	
+	<update id="updateOne" parameterType="OrganizationUser">
+		update tbl_org_user set uid=#{uid},oid=#{oid},
+		createTime=#{createTime} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="OrganizationUser">
+		select * from tbl_org_user where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="OrganizationUser">
+		select * from tbl_org_user
+	</select>
+	
+	<select id="findByOid" parameterType="int" resultType="OrganizationUser">
+		select * from tbl_org_user where oid=#{oid};
+	</select>
+	
+	<select id="findByUid" parameterType="int" resultType="OrganizationUser">
+		select * from tbl_org_user where uid=#{uid};
+	</select>
+	
+	<select id="findByOidUid" parameterType="map" resultType="OrganizationUser">
+		select * from tbl_org_user where oid=#{0} and uid=#{1}
+	</select>
+	
+</mapper>

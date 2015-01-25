@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.OrgStuDao">
+	<insert id="addOne" parameterType="OrganizationStudent" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_org_student(sid,oid,createdTime) 
+		values (#{sid},#{oid},#{createdTime});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_org_student	where id=#{id}
+	</delete>
+	
+	<delete id="deleteBySidOid" parameterType="map">
+		delete from tbl_org_student where sid=#{0} and oid=#{1}
+	</delete>
+	
+	<update id="updateOne" parameterType="OrganizationStudent">
+		update tbl_org_student set sid=#{sid},oid=#{oid},
+		createdTime=#{createdTime} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="OrganizationStudent">
+		select * from tbl_org_student where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="OrganizationStudent">
+		select * from tbl_org_student
+	</select>
+	
+	<select id="findByOid" parameterType="int" resultType="OrganizationStudent">
+		select * from tbl_org_student where oid=#{oid};
+	</select>
+	
+	<select id="findBySid" parameterType="int" resultType="OrganizationStudent">
+		select * from tbl_org_student where sid=#{sid};
+	</select>
+	
+	<select id="findBySidOid" parameterType="map" resultType="OrganizationStudent">
+		select * from tbl_org_student where sid=#{0} and oid=#{1};
+	</select>
+	
+</mapper>

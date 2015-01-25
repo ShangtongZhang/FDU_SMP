@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.OrganizationDao">
+	<insert id="addOne" parameterType="Organization" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_org(title,pid,description) 
+		values (#{title},#{pid},#{description});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_org	where id=#{id}
+	</delete>
+	
+	<update id="updateOne" parameterType="Organization">
+		update tbl_org set title=#{title}, pid=#{pid}, description=#{description} where id=#{id};
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="Organization">
+		select * from tbl_org where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="Organization">
+		select * from tbl_org
+	</select>
+	
+	<select id="getOrgsByUser" parameterType="int" resultType="Organization">
+		select * from tbl_org where tbl_org.id in 
+		(select oid from tbl_org_user where uid = #{uid})
+	</select>
+	
+	<select id="countStu" parameterType="int" resultType="int">
+		select count(*) from tbl_org_student where oid = #{oid};
+	</select>
+
+</mapper>

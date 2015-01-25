@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.MailDao">
+	<insert id="addOne" parameterType="Mail" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_mail (sender, receiver, content, sendTime, status, topic) values 
+		(#{sender}, #{receiver}, #{content}, #{sendTime}, #{status}, #{topic});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_mail where id=#{id}
+	</delete>
+	
+	<update id="updateOne" parameterType="Mail">
+		update tbl_mail set sender=#{sender}, receiver=#{receiver}, content=#{content},
+		sendTime=#{sendTime}, status=#{status}, topic=#{topic} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="Mail">
+		select * from tbl_mail where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="Mail">
+		select * from tbl_mail
+	</select>
+	
+	<select id="getMailsBySender" parameterType="int" resultType="Mail">
+		select * from tbl_mail where sender=#{uid}
+	</select>
+	
+	<select id="getMailsBySenderStatus" parameterType="map" resultType="Mail">
+		select * from tbl_mail where sender=#{0} and status=#{1}
+	</select>
+</mapper>

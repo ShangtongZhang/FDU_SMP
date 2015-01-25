@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.CommentDao">
+	<insert id="addOne" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_comment(uid,sid,oid,topic,period,comment,createdTime,visibility) 
+		values (#{uid},#{sid},#{oid},#{topic},#{period},#{comment},#{createdTime},#{visibility});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_comment	where id=#{id}
+	</delete>
+	
+	<delete id="deleteBySidUid" parameterType="map">
+		delete from tbl_comment where sid=#{0} and uid=#{1}
+	</delete>
+	
+	<update id="updateOne" parameterType="Comment">
+		update tbl_comment set uid=#{uid}, sid=#{sid}, oid=#{oid}, topic=#{topic}, period=#{period}, comment=#{comment},
+		createdTime=#{createdTime}, visibility=#{visibility} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="Comment">
+		select * from tbl_comment where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="Comment">
+		select * from tbl_comment
+	</select>
+	
+	<select id="findCommentsByTagUser" parameterType="map" resultType="Comment">
+		select * from tbl_comment join tbl_comment_tag on tbl_comment.id = tbl_comment_tag.cid 
+		where tid=#{0} and uid=#{1}
+	</select>
+	
+	<select id="findCommentsByTidOid" parameterType="map" resultType="Comment">
+		select * from tbl_comment join tbl_comment_tag on tbl_comment.id = tbl_comment_tag.cid
+		where tid=#{0} and oid=#{1} order by createdTime DESC;
+	</select>
+	
+	<select id="findCommentsBySidOid" parameterType="map" resultType="Comment">
+		select * from tbl_comment
+		where sid=#{0} and oid=#{1} order by createdTime DESC;
+	</select>
+	
+	<select id="searchCommentsByContentOid" parameterType="map" resultType="Comment">
+		select * from tbl_comment
+		where comment like #{0} and oid=#{1} order by createdTime DESC;
+	</select>
+	
+	<select id="findCommentsByStudentUser" parameterType="map" resultType="Comment">
+		select * from tbl_comment where sid=#{0} and uid=#{1}
+	</select>
+	
+	<select id="findCommentsByUser" parameterType="int" resultType="Comment">
+		select * from tbl_comment where uid=#{uid}
+	</select>
+	
+	<select id="searchCommentsByContentSid" parameterType="map" resultType="Comment">
+		select * from tbl_comment where sid=#{0} and comment like #{1} order by createdTime DESC;
+	</select>
+	
+	<select id="findCommentsByStudentUserTag" parameterType="map" resultType="Comment">
+		select * from tbl_comment join tbl_comment_tag on tbl_comment.id = tbl_comment_tag.cid 
+		where sid=#{0} and uid=#{1} and tid=#{2} order by createdTime DESC;
+	</select>
+	
+	<select id="findCommentsBySidTid" parameterType="map" resultType="Comment">
+		select * from tbl_comment where sid=#{0} and id in (
+		select cid from tbl_comment_tag where tid=#{1}) order by createdTime DESC;
+	</select>
+	
+	<select id="findCommentsBySid" parameterType="int" resultType="Comment">
+		select * from tbl_comment where sid=#{sid} order by createdTime DESC;
+	</select>
+	
+	<select id="findCommentsByStuAndOrgsOfUser" parameterType="map" resultType="Comment">
+		select * from tbl_comment
+		where sid = #{0} and oid in (
+		select oid from tbl_org_user where uid = #{1})
+		order by tbl_comment.period DESC;
+	</select>
+	
+	<select id="findCommentsByTagAndOrgsOfUser" parameterType="map" resultType="Comment">
+		select * from tbl_comment join tbl_comment_tag on tbl_comment.id = tbl_comment_tag.cid
+		join tbl_student on tbl_comment.sid = tbl_student.id
+		where tid = #{0} and oid in (
+		select oid from tbl_org_user where uid = #{1})
+		order by studentNo ASC, period DESC;
+	</select>
+	
+	<select id="searchCommentsByContentAndOrgsOfUser" parameterType="map" resultType="Comment">
+		select * from tbl_comment join tbl_student on tbl_comment.sid = tbl_student.id
+		where comment like #{0} and oid in (
+		select oid from tbl_org_user where uid = #{1})
+		order by studentNo ASC, period DESC;
+	</select>
+	
+</mapper>

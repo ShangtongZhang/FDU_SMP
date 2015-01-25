@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.UserEmailDao">
+	<insert id="addOne" parameterType="UserEmail" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_user_email (uid, email) values (#{uid}, #{email});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_user_email	where id=#{id}
+	</delete>
+	
+	<delete id="deleteByUid" parameterType="int">
+		delete from tbl_user_email	where uid=#{uid}
+	</delete>
+	
+	<update id="updateOne" parameterType="UserEmail">
+		update tbl_user_email set uid=#{uid}, email=#{email} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="UserEmail">
+		select * from tbl_user_email where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="UserEmail">
+		select * from tbl_user_email
+	</select>
+	
+	<select id="getUserEmailByUid" parameterType="int" resultType="UserEmail">
+		select * from tbl_user_email where uid=#{uid}
+	</select>
+	
+</mapper>

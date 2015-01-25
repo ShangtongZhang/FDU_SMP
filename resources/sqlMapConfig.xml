@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="config/dbConfig.properties" />
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="Comment" type="edu.fudan.msg.pojo.Comment" />
+		<typeAlias alias="Organization" type="edu.fudan.msg.pojo.Organization" />
+		<typeAlias alias="OrganizationStudent" type="edu.fudan.msg.pojo.OrganizationStudent" />
+		<typeAlias alias="OrganizationUser" type="edu.fudan.msg.pojo.OrganizationUser" />
+		<typeAlias alias="Student" type="edu.fudan.msg.pojo.Student" />
+		<typeAlias alias="User" type="edu.fudan.msg.pojo.User" />
+		<typeAlias alias="Tag" type="edu.fudan.msg.pojo.Tag" />
+		<typeAlias alias="CommentTag" type="edu.fudan.msg.pojo.CommentTag" />
+		<typeAlias alias="UserPhone" type="edu.fudan.msg.pojo.UserPhone" />
+		<typeAlias alias="UserEmail" type="edu.fudan.msg.pojo.UserEmail" />
+		<typeAlias alias="Message" type="edu.fudan.msg.pojo.Message" />
+		<typeAlias alias="Mail" type="edu.fudan.msg.pojo.Mail" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="dbMap/comment.xml" />
+		<mapper resource="dbMap/organization.xml" />
+		<mapper resource="dbMap/org_stu.xml" />
+		<mapper resource="dbMap/org_user.xml" />
+		<mapper resource="dbMap/student.xml" />
+		<mapper resource="dbMap/user.xml" />
+		<mapper resource="dbMap/tag.xml" />
+		<mapper resource="dbMap/comment_tag.xml" />
+		<mapper resource="dbMap/user_phone.xml" />
+		<mapper resource="dbMap/user_email.xml" />
+		<mapper resource="dbMap/message.xml" />
+		<mapper resource="dbMap/mail.xml" />
+	</mappers>
+</configuration>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.StudentDao">
+	<insert id="addOne" parameterType="Student" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_student(studentNo,email,phone,name,remark) 
+		values (#{studentNo},#{email},#{phone},#{name},#{remark});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_student	where id=#{id}
+	</delete>
+	
+	<update id="updateOne" parameterType="Student">
+		update tbl_student set studentNo=#{studentNo}, email=#{email}, phone=#{phone},
+		name=#{name}, remark=#{remark} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="Student">
+		select * from tbl_student where id=#{id}
+	</select>
+	
+	<select id="getStudentByNo" parameterType="String" resultType="Student">
+		select * from tbl_student where studentNo=#{studentNo}
+	</select>
+	
+	<select id="findAll" resultType="Student">
+		select * from tbl_student
+	</select>
+	
+	<select id="getStudentsByOrg" parameterType="map" resultType="Student">
+		select * from tbl_student where id in (select sid from tbl_org_student where oid = #{0}) order by studentNo ASC limit #{1}, #{2} ;
+	</select>
+	
+	<select id="countStudentsByOrg" parameterType="int" resultType="int">
+		select count(*) from tbl_student where id in (select sid from tbl_org_student where oid = #{oid});
+	</select>
+	
+	<select id="searchStudentsByName" parameterType="map" resultType="Student">
+		select * from tbl_student where id in (select sid from tbl_org_student where oid = #{0}) and name like #{1} order by studentNo ASC;
+	</select>
+	
+	<select id="searchStudentsByNo" parameterType="map" resultType="Student">
+		select * from tbl_student where id in (select sid from tbl_org_student where oid = #{0}) and studentNo like #{1} order by studentNo ASC;
+	</select>
+	
+</mapper>

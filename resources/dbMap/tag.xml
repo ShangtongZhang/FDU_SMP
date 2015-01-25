@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.TagDao">
+	<insert id="addOne" parameterType="Tag" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_tag (tagName, creator) values (#{tagName}, #{creator});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_tag	where id=#{id}
+	</delete>
+	
+	<update id="updateOne" parameterType="Tag">
+		update tbl_tag set tagName=#{tagName} creator=#{creator} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="Tag">
+		select * from tbl_tag where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="Tag">
+		select * from tbl_tag
+	</select>
+	
+	<select id="getTagsByComment" parameterType="int" resultType="Tag">
+		select * from tbl_tag join tbl_comment_tag on tbl_tag.id=tbl_comment_tag.tid where cid=#{cid}
+	</select>
+	
+</mapper>

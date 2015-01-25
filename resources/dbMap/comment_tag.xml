@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.CommentTagDao">
+	<insert id="addOne" parameterType="CommentTag" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_comment_tag (tid, cid) values (#{tid}, #{cid});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_comment_tag	where id=#{id}
+	</delete>
+	
+	<update id="updateOne" parameterType="CommentTag">
+		update tbl_comment_tag set tid=#{tid}, cid=#{cid} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="CommentTag">
+		select * from tbl_comment_tag where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="CommentTag">
+		select * from tbl_comment_tag
+	</select>
+	
+</mapper>

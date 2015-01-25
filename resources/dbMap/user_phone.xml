@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fudan.msg.dao.UserPhoneDao">
+	<insert id="addOne" parameterType="UserPhone" useGeneratedKeys="true" keyProperty="id">
+		insert ignore into tbl_user_phone (uid, phone) values (#{uid}, #{phone});
+	</insert>
+	
+	<delete id="deleteOne" parameterType="int">
+		delete from tbl_user_phone	where id=#{id}
+	</delete>
+	
+	<delete id="deleteByUid" parameterType="int">
+		delete from tbl_user_phone	where uid=#{uid}
+	</delete>
+	
+	<update id="updateOne" parameterType="UserPhone">
+		update tbl_user_phone set uid=#{uid}, Phone=#{Phone} where id=#{id}
+	</update>
+	
+	<select id="findOne" parameterType="int" resultType="UserPhone">
+		select * from tbl_user_phone where id=#{id}
+	</select>
+	
+	<select id="findAll" resultType="UserPhone">
+		select * from tbl_user_phone
+	</select>
+	
+	<select id="getUserPhoneByUid" parameterType="int" resultType="UserPhone">
+		select * from tbl_user_phone where uid=#{uid}
+	</select>
+	
+</mapper>
