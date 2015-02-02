@@ -393,8 +393,7 @@ int day = now.get(Calendar.DAY_OF_MONTH);
           <div class="modal-body editStudentModal">          
             <div style="max-height:60em; overflow:auto;">
             	<table style="width:95%; margin:1em auto;" class="formerComment table table-bordered">
-              		<tr><td style="width:25%; text-align:center;">主题</td>
-                  
+              		<tr>                 
                   		<td style="width:15%; text-align:center;">内容</td>
                   		<td style="width:15%; text-align:center;">发件人</td>
                   		<td style="width:15%; text-align:center;">收件人</td>

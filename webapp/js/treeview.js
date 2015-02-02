@@ -2873,8 +2873,8 @@ function msgHistory(){
 		dataType: "json",
 		success: function(data, status, xHr){			
 			if("OK" == data.Result){	
-				//var objs = eval(data.Data);
-				//listMail(objs);
+				var objs = eval(data.Data);
+				listMsg(objs);
 			}else{
 				//alert(data.Message);
 				new Toast({context:$('body'),message:data.Message}).show();						
@@ -2888,7 +2888,7 @@ function msgHistory(){
 }
 
 function listMsg(objs){
-	document.getElementById("mailListTable").innerHTML = "";
+	document.getElementById("msgListTable").innerHTML = "";
 	
 		
 				
@@ -2897,11 +2897,12 @@ function listMsg(objs){
 			//console.log(id + " : " + item.id);
 			var newNode = document.createElement ("tr");						
 			
+			/*
 			var cell1=document.createElement ("td");
 			cell1.className = "text-positon";			
 			cell1.innerHTML = item.topic;			
 			newNode.appendChild (cell1);
-			
+			*/
 			
 			
 			
@@ -2910,7 +2911,7 @@ function listMsg(objs){
 			//var vis = item.evaluation.visibility;
 			//console.log(vis);
 			//if(vis == 0)
-			var opeHtml = "<table><tr><td><input type=\"button\" class=\"btn btn-default btn-comment\" value=\"查看\" onClick=\"viewMail("+item.id+");\" id=\"seeMail"+item.id+"\"></td>"+
+			var opeHtml = "<table><tr><td><input type=\"button\" class=\"btn btn-default btn-comment\" value=\"查看\" onClick=\"viewMsg("+item.id+");\" id=\"seeMsg"+item.id+"\"></td>"+
                 "</tr></table>";
 			
 			var cell2=document.createElement ("td");
@@ -2928,7 +2929,7 @@ function listMsg(objs){
 			
 			
 			
-			var opeHtml = "<table><tr><td><input type=\"button\" class=\"btn btn-default btn-comment\" value=\"查看\" onClick=\"viewMailR("+item.id+");\" id=\"seeMailR"+item.id+"\"></td>"+
+			var opeHtml = "<table><tr><td><input type=\"button\" class=\"btn btn-default btn-comment\" value=\"查看\" onClick=\"viewMsgR("+item.id+");\" id=\"seeMsgR"+item.id+"\"></td>"+
             "</tr></table>";
 		
 			var cell4=document.createElement ("td");
@@ -2944,16 +2945,34 @@ function listMsg(objs){
 			
 					
 			
-			document.getElementById("mailListTable").appendChild (newNode); 		
+			document.getElementById("msgListTable").appendChild (newNode); 		
 			
 			
 			
+			
+			
+			var newNode2 = document.createElement ("tr");
+            newNode2.className = "hideTheDiv";
+            newNode2.id = "msgRTr" + item.id;
+            
+			var cell7=document.createElement ("td");
+			cell7.setAttribute("colspan","5");			
+			//cell1.className = "text-positon";			
+			//cell7.innerHTML = "<div style=\"word-break:break-all\">"+item.receivers+"</div>";
+			var html7 = ""
+			$.each(item.receivers, function displayStudent(id,item){
+				html7 += "<p>"+item+"</p>";
+			});
+			cell7.innerHTML = html7;
+			newNode2.appendChild (cell7);
+			
+			document.getElementById("msgListTable").appendChild (newNode2);
 			
 			
 			
             var newNode1 = document.createElement ("tr");
             newNode1.className = "hideTheDiv";
-            newNode1.id = "mailTr" + item.id;
+            newNode1.id = "msgTr" + item.id;
             
 			var cell6=document.createElement ("td");
 			cell6.setAttribute("colspan","5");			
@@ -2961,48 +2980,34 @@ function listMsg(objs){
 			cell6.innerHTML = "<div style=\"word-break:break-all\">"+item.content+"</div>";			
 			newNode1.appendChild (cell6);
 			
-			document.getElementById("mailListTable").appendChild (newNode1);
-			
-			
-			
-			var newNode2 = document.createElement ("tr");
-            newNode2.className = "hideTheDiv";
-            newNode2.id = "mailRTr" + item.id;
-            
-			var cell7=document.createElement ("td");
-			cell7.setAttribute("colspan","5");			
-			//cell1.className = "text-positon";			
-			cell7.innerHTML = "<div style=\"word-break:break-all\">"+item.receiver+"</div>";			
-			newNode2.appendChild (cell7);
-			
-			document.getElementById("mailListTable").appendChild (newNode2);
+			document.getElementById("msgListTable").appendChild (newNode1);
 		});
 	//});
 }
 
 function viewMsg(id) {
-	var name = document.getElementById("mailTr" + id).className;
-	var button = document.getElementById("seeMail" + id);
+	var name = document.getElementById("msgTr" + id).className;
+	var button = document.getElementById("seeMsg" + id);
 	// console.log(button.value);
 	if (name == "") {
-		document.getElementById("mailTr" + id).className = "hideTheDiv";
+		document.getElementById("msgTr" + id).className = "hideTheDiv";
 		button.value = "查看";
 	} else {
-		document.getElementById("mailTr" + id).className = "";
+		document.getElementById("msgTr" + id).className = "";
 		button.value = "收起";
 	}
 	// console.log(name);
 }
 
 function viewMsgR(id) {
-	var name = document.getElementById("mailRTr" + id).className;
-	var button = document.getElementById("seeMailR" + id);
+	var name = document.getElementById("msgRTr" + id).className;
+	var button = document.getElementById("seeMsgR" + id);
 	// console.log(button.value);
 	if (name == "") {
-		document.getElementById("mailRTr" + id).className = "hideTheDiv";
+		document.getElementById("msgRTr" + id).className = "hideTheDiv";
 		button.value = "查看";
 	} else {
-		document.getElementById("mailRTr" + id).className = "";
+		document.getElementById("msgRTr" + id).className = "";
 		button.value = "收起";
 	}
 	// console.log(name);
